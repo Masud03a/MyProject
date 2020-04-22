@@ -29,8 +29,25 @@ namespace MyProject
                 {
                     Log.Error(ex.Message);
                     return false;
-                }
-            }        
+                } 
+            }
         }
-    }
+        public bool isPreviouslyCreated(bool _admin);
+        {
+            string _query = string.Empty;
+            if(_admin) 
+                _query =  $"select _name from admin_list_table where _name={username}";
+    
+            else
+                _query = $"select _name from users_list_table where _name={username}";
+
+            SQLManager _sqlManager = new SQLManager(); 
+            SqlDataReader _reader = _sqlManager.Select(_query);
+            if(_reader.FieldCount > 0)
+                return true;
+            else
+                return false;   
+
+        }
+    }          
 }

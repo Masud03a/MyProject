@@ -2,9 +2,9 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Bank_Credit_Manager
+namespace MyProject
 {
-    class SQLManager : ISQLManager
+    class SQLManager : InterSqlCode
     {
         public string ConnectionString()
         {

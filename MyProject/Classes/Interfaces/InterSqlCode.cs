@@ -2,7 +2,7 @@ using System.Data.SqlClient;
 
 namespace MyProject
 {
-    public interface ISQLManager
+    public interface InterSqlCode
     {
         string ConnectionString();
         void InsertData(string _tableName, string _columns, string _values);
