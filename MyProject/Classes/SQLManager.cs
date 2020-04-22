@@ -28,6 +28,38 @@ namespace MyProject
             {
                 Log.Error(ex.Message);
             }
-        }         
+        }   
+
+        public bool isConnected(SqlConnection _sqlConn)
+        {
+            if(_sqlConn.State == ConnectionState.Open)
+                return true;
+            else
+                return false;
+        }
+
+        public SqlDataReader Select(string _query)
+        {
+            try
+            {
+                SqlConnection _sqlConn = new SqlConnection(this.ConnectionString());
+                _sqlConn.Open();
+                if(this.isConnected(_sqlConn))
+                {
+                    SqlCommand _sqlCmd = new SqlCommand(_query, _sqlConn);
+                    var reader = _sqlCmd.ExecuteReader();
+                    _sqlConn.Close();
+                    return reader;
+                }
+                else
+                    return null;
+            }
+
+            catch(Exception ex)
+            {
+                Log.Error(ex.Message);
+                return null;
+            }
+        }    
     }
 }            

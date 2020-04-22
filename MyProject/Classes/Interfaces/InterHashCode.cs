@@ -2,7 +2,7 @@ using System;
 
 namespace MyProject
 {
-    public interface IHashCode
+    public interface InterHashCode
     {
        string Generate();
     }

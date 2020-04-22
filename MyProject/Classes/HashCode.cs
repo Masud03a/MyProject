@@ -10,24 +10,22 @@ using System.Security.Cryptography;
 using System;
 using System.Text;
 
-namespace Bank_Credit_Manager
+namespace MyProject
 {
-    public class HashCode
+    public class HashCode : InterHashCode
     {
        private string inputedData = string.Empty; 
        public HashCode(string _data)
        {
            inputedData = _data;
        }
-
-
-       public string Generate()
-       {
-           string _results = string.Empty;
-           var _md5 = MD5.Create();
-           var _heshCode = _md5.ComputeHash(Encoding.UTF8.GetBytes(inputedData));
-           _results = Convert.ToBase64String(_heshCode);
-           return _results;
-       }
+    public string Generate()
+        {
+            string _results = string.Empty;
+            var _md5 = MD5.Create();
+            var _hashCode = _md5.ComputeHash(Encoding.UTF8.GetBytes(inputedData));
+             _results = Convert.ToBase64String(_hashCode);
+            return _results;
+        }    
     }
 }

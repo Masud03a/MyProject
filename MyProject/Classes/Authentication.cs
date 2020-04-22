@@ -35,6 +35,7 @@ namespace MyProject
         public bool isPreviouslyCreated(bool _admin);
         {
             string _query = string.Empty;
+            
             if(_admin) 
                 _query =  $"select _name from admin_list_table where _name={username}";
     
@@ -46,8 +47,24 @@ namespace MyProject
             if(_reader.FieldCount > 0)
                 return true;
             else
-                return false;   
-
+                return false;  
         }
-    }          
+
+         public bool Login(string _table_name)
+        {
+            string _query = string.Empty;
+            SQLManager _sqlManager = new SQLManager();
+            SqlDataReader _reader = _sqlManager.Select($"select _name, _password from {_table_name} where _name={username}, _password={userpassword}");
+            
+            if(_reader.FieldCount > 0)   
+                return true;
+            else
+                return false;
+        }
+
+        public bool PasswordVerification()
+        {
+            return Regex.IsMatch(userpassword, "^[a-zA-Z0-9]+$");
+        }
+    }            
 }
