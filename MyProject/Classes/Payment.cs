@@ -111,6 +111,60 @@ namespace MyProject
             connection.Close();
             return isExist; 
         }
+        
+        public void Pay(double amount){
+
+            if ( IsPaymentIDExist() == true ){
+                SqlConnection connection = new SqlConnection(Connection.connectionString);
+                
+                if ( connection.State == ConnectionState.Open ){
+                    connection.Close(); 
+                }
+                connection.Open(); 
+                
+                string commandText = $"select * from Payment where ClienID = {ClientID}";
+                
+                SqlCommand command = new SqlCommand(commandText, connection); 
+
+                SqlDataReader reader = command.ExecuteReader();
+                string datePayment = "", lastPaymet = "";
+                double amountShouldPay;
+                while ( reader.Read() && amount > 0 ) {
+                    int id = int.Parse(reader.GetValue(0).ToString().Trim());
+                    datePayment = reader.GetValue(2).ToString().Trim();
+                    lastPaymet = reader.GetValue(5).ToString().Trim();
+                    amountShouldPay = double.Parse(reader.GetValue(3).ToString().Trim());
+                    if ( amountShouldPay == 0 ) {
+                        continue; 
+                    } 
+
+                    if ( amountShouldPay > 0 ){
+                        if ( amountShouldPay < amount ){
+                            amountShouldPay = 0;
+                            string commandText1 = $"update Payment set AmountShoulPay = {amountShouldPay} where ID = {id}";
+                            SqlCommand command1 = new SqlCommand(commandText1, connection);
+                            command1.ExecuteNonQuery();
+                            amount -= amountShouldPay;
+                        }
+                        else 
+                        {
+                            string commandText1 = $"update Payment set AmountShoulPay = {amountShouldPay} where ID = {id}";
+                            SqlCommand command1 = new SqlCommand(commandText1, connection);
+                            command1.ExecuteNonQuery(); 
+                            amountShouldPay -= amount; 
+                            amount = 0; 
+                        }
+                    }
+                }
+                reader.Close(); 
+            }
+        }      
+    }
+}
+                            
+
+
+        
 
         
 
