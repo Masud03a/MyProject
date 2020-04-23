@@ -79,5 +79,53 @@ namespace MyProject
                 System.Console.WriteLine("1. Applications");
                 System.Console.Write("2. Payment graph of Application By ID\n3. Exit\nPlease type reference number: ");
             int adminChoice = int.Parse(Console.ReadLine());
+            switch (adminChoice)
+            {
+                case 1:
+                {
+                    Applications application = new Applications(id);
+                    application.creditStateView();
+                    goto adminFunctions;
+                } 
+                break; 
+                
+                case 2:
+                {
+                    appIDChecking:
+                        System.Console.WriteLine("Type Application ID: ");
+                        int appID;
+                        if ( !int.TryParse(Console.ReadLine(), out appID )) {
+                            System.Console.WriteLine("Error: check input");
+                            goto appIDChecking; 
+                        }
+                        Payment payment = new Payment(id, appID);
+                        if ( payment.IsPaymentIDExist() ){
+                            payment.showPaymentGraphByClientID();
+                        }  
+                        goto adminFunctions; 
+                } 
+                break;
+                case 3:
+                {
+
+                }break;
+            }
+            reader.Close();
+            connection.Close(); 
+        }
+
+        public bool AddClient() {
+            bool isAdded = false;
+            SqlConnection connection = new SqlConnection(Connection.connectionString);
+            if ( connection.State == ConnectionState.Open) {
+                connection.Close();
+            }
+            connection.Open();
+            string commandText = $"Insert into Client( [Firstname],[Secondname],[Middlename],[Gender],[Age],[Citizenship],[Family]) Values ( '{Firstname}', '{Secondname}', '{Middlename}', '{Gender}', {Age}, '{Citizenship}', '{Family}')";
+            
+
+
+
+            }
     }
 }
