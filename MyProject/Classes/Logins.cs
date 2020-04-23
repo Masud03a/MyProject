@@ -70,7 +70,41 @@ namespace MyProject
             }
 
         }
-        
-             
 
+        public int getUserID(){
+            SqlConnection connection = new SqlConnection(Connection.connectionString);
+            
+            if ( connection.State == ConnectionState.Open ) {
+                connection.Close();
+            }
+            connection.Open();
+
+            string getUserId = $"select ID from Logins where Login = '{login}' and Password = '{password}'";
+
+            SqlCommand command = new SqlCommand(getUserId, connection);
+            SqlDataReader reader = command.ExecuteReader();
+
+            int res = -1;
+            while ( reader.Read() ){
+                res = int.Parse(reader.GetValue(0).ToString()); 
+            }
+
+            reader.Close(); 
+            return res;  
+        }  
+
+        public bool checkLogin(){
+            foreach (var item in login)
+            {
+                if ( item == '+' ){
+                    continue; 
+                }
+
+                if ( item < '0' || item > '9' ){
+                    return false; 
+                }
+            }
+            return true; 
+        }  
+    }
 }
