@@ -1,6 +1,6 @@
 using System;
 
-namespace Bank_Credit_Manager
+namespace MyProject
 {
     class Log
     {

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\MyProject\\MyProject\\MyProject.csproj": {}
+    "c:\\projects\\MyProject\\MyProject\\MyProject.csproj": {}
   },
   "projects": {
-    "c:\\MyProject\\MyProject\\MyProject.csproj": {
+    "c:\\projects\\MyProject\\MyProject\\MyProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\MyProject\\MyProject\\MyProject.csproj",
+        "projectUniqueName": "c:\\projects\\MyProject\\MyProject\\MyProject.csproj",
         "projectName": "MyProject",
-        "projectPath": "c:\\MyProject\\MyProject\\MyProject.csproj",
+        "projectPath": "c:\\projects\\MyProject\\MyProject\\MyProject.csproj",
         "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "c:\\MyProject\\MyProject\\obj\\",
+        "outputPath": "c:\\projects\\MyProject\\MyProject\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -35,6 +35,12 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "dependencies": {
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.6.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
