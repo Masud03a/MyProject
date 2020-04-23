@@ -157,6 +157,25 @@ namespace MyProject
                 default: sum += 0; 
                 break;           
             }
+
+            //! percents 
+            int percents; 
+            if ( CreditTerm < 6 )
+            {
+                CreditAmount += ( CreditAmount * percentPerCredit[0] / 100 );
+                percents = percentPerCredit[0];
+            }
+            else if (CreditTerm <= 8)
+            {
+                CreditAmount += ( CreditAmount * percentPerCredit[1] / 100 );
+                percents = percentPerCredit[1];
+            }
+            else{
+                CreditAmount += ( CreditAmount * percentPerCredit[2] / 100 ); 
+                percents = percentPerCredit[2]; 
+            }
+
+
                 
 
 
