@@ -41,7 +41,42 @@ namespace AlifCreditProject
             
             return isRegistered; 
         }
+        public bool Login(){
+            bool isLogined = false;
+            if ( checkLogin() == true ) {
+                if ( getAdminID() != -1 ) {
+                    isLogined = true;
+                }
+            }
+
+            else 
+            {
+                System.Console.WriteLine("Error: Incorrect type of Login");
+            }        
+            
+            return isLogined;
+        }    
+
+        public int getAdminID() {
+            SqlConnection connection = new SqlConnection(Connection.connectionString);
+
+            if ( connection.State == ConnectionState.Open ) {
+                connection.Close();
+            }
+            connection.Open();
+            string getAdminId = $"select ID from Admins where Login = '{login}' and Password = '{password}'";
+            SqlCommand command = new SqlCommand(getAdminId, connection);
+            SqlDataReader reader = command.ExecuteReader();
+            int res = -1; 
+
+            while ( reader.Read() ) {
+                res = int.Parse(reader.GetValue(0).ToString()); 
+                } 
+                return res;  
+
         
+
+
 
 
         }    
