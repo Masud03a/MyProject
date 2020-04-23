@@ -160,43 +160,56 @@ namespace MyProject
                 application.RegisterForCredit();
                 goto clientFunctions;
 
-                clientApplicationView:
-                    Applications applications = new Applications(clientID)
-                    applications.creditStateView();
-                    goto clientFunctions;
-                userRegister:
-                    System.Console.WriteLine("\t\t\t\tPlease fill following information carefully!!!");
-                    System.Console.Write("\t\t\t\tEnter your Firstname: ");
-                    string tempFirstname = Console.ReadLine();
-                    System.Console.Write("\t\t\t\tEnter your Lastname: ");
-                    string tempSecondname = Console.ReadLine();
-                    System.Console.Write("\t\t\t\tEnter your Middlename: ");
-                    string tempMiddlename = Console.ReadLine();
-                    loginPasswordChecking: 
-                        System.Console.Write("\t\t\t\tEnter your new login: (Use phone numbers) ");
-                        string login = Console.ReadLine();
-                        System.Console.Write("\t\t\t\tEnter your new password: ");
-                        string password = Console.ReadLine();
-                        Logins logins = new Logins(login, password);
-                        var result = logins.Register();
-                        if ( result == -1 ){
-                            goto loginPasswordChecking;
-                        } else if ( result == -2 ){
-                            goto userLogin;
-                        }
-                    ageIntEntering:
-                        System.Console.Write("\t\t\t\tEnter your birthday in format(dd/MM/yyyy): ");
-                        string birthday = Console.ReadLine();
-                        DateTime birthdayDate;
-                        int tempAge;
-                        if ( DateTime.TryParse(birthday, out birthdayDate) ){
-                            tempAge = GetAge(birthdayDate);
-                        } else{
-                            System.Console.WriteLine("\t\t\t\tError try again ... ");
-                            goto tempGenderChecking; 
-                        }
-                            
-
+            clientApplicationView:
+                Applications applications = new Applications(clientID)
+                applications.creditStateView();
+                goto clientFunctions;
+            userRegister:
+                System.Console.WriteLine("\t\t\t\tPlease fill following information carefully!!!");
+                System.Console.Write("\t\t\t\tEnter your Firstname: ");
+                string tempFirstname = Console.ReadLine();
+                System.Console.Write("\t\t\t\tEnter your Lastname: ");
+                string tempSecondname = Console.ReadLine();
+                System.Console.Write("\t\t\t\tEnter your Middlename: ");
+                string tempMiddlename = Console.ReadLine();
+                loginPasswordChecking: 
+                    System.Console.Write("\t\t\t\tEnter your new login: (Use phone numbers) ");
+                    string login = Console.ReadLine();
+                    System.Console.Write("\t\t\t\tEnter your new password: ");
+                    string password = Console.ReadLine();
+                    Logins logins = new Logins(login, password);
+                    var result = logins.Register();
+                    if ( result == -1 ){
+                        goto loginPasswordChecking;
+                    } else if ( result == -2 ){
+                        goto userLogin;
+                    }
+                ageIntEntering:
+                    System.Console.Write("\t\t\t\tEnter your birthday in format(dd/MM/yyyy): ");
+                    string birthday = Console.ReadLine();
+                    DateTime birthdayDate;
+                    int tempAge;
+                    if ( DateTime.TryParse(birthday, out birthdayDate) ){
+                        tempAge = GetAge(birthdayDate);
+                    } else{
+                        System.Console.WriteLine("\t\t\t\tError try again ... ");
+                        goto tempGenderChecking; 
+                    }
+                tempGenderChecking:
+                    System.Console.Write("\t\t\t\tEnter your Gender: M/F");
+                    string tempGender = Console.ReadLine();
+                    if ( tempGender == "M" ){
+                        tempGender = "Male";
+                    }
+                    else if ( tempGender == "F" ){
+                        tempGender = "Female";
+                    }
+                    else
+                    {
+                        System.Console.WriteLine("\t\t\t\tError try again ... ");
+                        goto tempGenderChecking;
+                    }        
+                
 
     }
 }
