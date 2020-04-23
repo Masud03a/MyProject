@@ -122,10 +122,16 @@ namespace MyProject
             }
             connection.Open();
             string commandText = $"Insert into Client( [Firstname],[Secondname],[Middlename],[Gender],[Age],[Citizenship],[Family]) Values ( '{Firstname}', '{Secondname}', '{Middlename}', '{Gender}', {Age}, '{Citizenship}', '{Family}')";
-            
 
 
-
+            SqlCommand command = new SqlCommand(commandText, connection);
+            var result = command.ExecuteNonQuery();
+            if ( result == 1 ){
+                isAdded = true; 
             }
-    }
+            System.Console.WriteLine("Client Added");
+            return isAdded;
+        }
+
+    }        
 }
