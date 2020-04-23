@@ -208,7 +208,53 @@ namespace MyProject
                     {
                         System.Console.WriteLine("\t\t\t\tError try again ... ");
                         goto tempGenderChecking;
-                    }        
+                    }       
+                tempCitizenshipChecking:
+                    System.Console.Write("\t\t\t\tEnter your citizenship: Tajikistan/Other");
+                    string tempCitizenship = Console.ReadLine();
+                    if ( tempCitizenship.ToLower() == "tajikistan") {
+                        tempCitizenship = "Tajikistan";
+                    } 
+                    else if ( tempCitizenship.ToLower() == "other") {
+                        tempCitizenship = "Other";
+                    } 
+                    else {
+                        System.Console.WriteLine("Error try again ... ");
+                        goto tempCitizenshipChecking;
+                    }
+                tempFamilyChecking:
+                    bool isInFamilyArray = false;
+                    System.Console.Write(@"Enter your family state....
+                    1. Married 
+                    2. Divorced
+                    3. Single
+                    4. Widowed
+                    Type family state: ");
+                    string tempFamily = Console.ReadLine(); 
+                    foreach (var item in familyArray)
+                    {
+                        if ( item.ToLower() == tempFamily.ToLower() ){
+                            isInFamilyArray = true;
+                            tempFamily = item; 
+                            break; 
+                        }
+                    }
+                    if ( !isInFamilyArray ){
+                        goto tempFamilyChecking; 
+                    } 
+
+                ClientAdding:
+                    Client client = new Client(tempFirstname, tempSecondname, tempMiddlename, tempGender, tempAge, tempCitizenship, tempFamily);
+                    bool isAdded = client.AddClient();
+                    if ( !isAdded ) {
+                        goto ClientAdding; 
+                    }   
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    System.Console.WriteLine("\t\t\t\tCongratulations..... You have done it\n Now you may Login");           
+                    Console.ForegroundColor = ConsoleColor.Yellow; 
+                    goto userLogin;  
+                    
+
                 
 
     }
