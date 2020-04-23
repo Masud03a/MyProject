@@ -175,6 +175,58 @@ namespace MyProject
                 percents = percentPerCredit[2]; 
             }
 
+            //! 12 Months
+            sum+=1;
+
+            if ( sum > 11 )
+            {
+                Approved = "YES";
+            }
+            else
+            {
+                Approved = "NO";    
+            }
+
+            //! Calculation end
+
+            connection.Close();
+            connection = new SqlConnection(Connection.connectionString);
+            connection.Open();
+            commandText = $"Insert into Applications([ClientID], [Firstname], [Secondname], [Amount], [Term], [Approved], [Goal], [Salary], [PercentCredit]) Values({ID}, '{Firstname}', '{Secondname}', {CreditAmount}, {CreditTerm}, '{Approved}', '{CreditGoal}', '{Math.Round(salary,3)}', {percents})";
+            command = new SqlCommand(commandText, connection);
+            var result = command.ExecuteNonQuery(); 
+
+            getApplicationIDS();
+
+            //! IF application was Approved, create graph of payment 
+            if ( Approved == "YES" )
+            {
+                connection.Close();
+                connection.Open();
+                SqlConnection connection1 = new SqlConnection(Connection.connectionString);
+                DateTime now = DateTime.Now.Date;
+                now.AddMonths(1);
+                string strnow;
+
+                int lastID = ApplicationIDs[ApplicationIDs.Count-1];
+                // History.AddApplicationToHistory(lastID, CreditAmount);
+                lastID++;
+
+                for ( int i = 0; i < CreditTerm; i++ )
+                {
+                    strnow = now.ToString().Substring(0,10);
+                    string commandText1 = $"Insert into Payment([ID], [ClientID], [DatePayment], [AmountShouldPay], [Delays], [LastPayment]) Values({lastID}, {ID}, '{strnow}', '{Math.Round((CreditAmount/CreditTerm))}', 0, NULL)";
+                    SqlCommand command1 = new SqlCommand(commandText1, connection); 
+                    command1.ExecuteNonQuery(); 
+                    now = now.AddMonths(1); 
+                }
+            }
+
+
+            if ( result == 1 )isCreditRegistered = true;
+            return isCreditRegistered; 
+        }     
+
 
                 
 
