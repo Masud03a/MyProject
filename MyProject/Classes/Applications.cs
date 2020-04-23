@@ -66,7 +66,103 @@ namespace MyProject
 
             reader.Close();
 
+            //! New Calculation 
+            int amountHistoryClosed = History.checkForClientHistory(ID);
+            int sum = 0;
+
+            if (Gender == "Male") 
+            {
+                sum ++;
+            } 
+            else
+            {
+                sum += 2; 
+            }  
+
+            if ( amountHistoryClosed == 0 )
+            {
+                sum += -1;
+            }
+            else if ( amountHistoryClosed <= 2 )
+            {  
+                sum += 1;
+            }
+            else
+            {
+                sum += 2; 
+            }    
+
+            switch (Family)
+            {  
+                case "Single":{sum+=1;} break;
+                case "Married":{sum+=2;}break;  
+                case "Divorced":{sum+=1;}break;
+                case "Widow":{sum+=2;}break;  
+            }
+
+            if (Age >= 26 && Age <= 35)
+            {
+                sum+=1;     
+            }
+            else if ( Age >= 36 && Age <= 62 )
+            {
+                sum+=2;
+            }
+            else if ( Age >= 63 )
+            {
+                sum+=1;       
+            }
+
+            if ( Citizenship == "Tajikistan" )
+            {
+                sum+=1;
+            }
+
+            double CreditPercent = ((CreditAmount * 100) / salary);
+            System.Console.WriteLine(salary);
+
+            int[] percentPerCredit = new int[]{10, 15, 20, 25};
             
+            if ( CreditPercent <= 80 )
+            {
+                sum += 4;
+            }
+            else if ( CreditPercent > 80 && CreditPercent <= 150 )
+            {
+                sum += 3;
+            }
+            else if ( CreditPercent > 150 && CreditPercent <= 250 )
+            {
+                sum += 2;
+            }
+            else
+            {
+                sum += 1; 
+            }     
+            switch( CreditGoal )
+            {
+                case "Home":
+                {
+                    sum += 2;
+                }break;
+                case "Fix":
+                {
+                    sum += 1; 
+                } break; 
+                case "Others":
+                {
+                    sum -= 1; 
+                }break;
+                
+                default: sum += 0; 
+                break;           
+            }
+                
+
+
+
+
+
 
 
 
