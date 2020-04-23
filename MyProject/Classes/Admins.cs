@@ -2,7 +2,7 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace AlifCreditProject
+namespace MyProject
 {
     public class Admins
     {
@@ -36,7 +36,7 @@ namespace AlifCreditProject
             else
             {
                 System.Console.WriteLine("Sorry, you already have account....");
-                isRegistered = false
+                isRegistered = false;
             }    
             
             return isRegistered; 
@@ -74,9 +74,19 @@ namespace AlifCreditProject
                 } 
                 return res;  
 
-        
+        }
+        public bool checkLogin(){
 
-
-
-
-        }    
+            foreach (var item in login)
+            {
+                if ( item == '+' ){
+                    continue; 
+                }
+                if ( item < '0' || item > '9' ){
+                    return false; 
+                }
+            }
+            return true; 
+        }
+    }
+}
