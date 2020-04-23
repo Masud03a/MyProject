@@ -302,7 +302,6 @@ namespace MyProject
                         goto adminDashboard;
                     } break; 
                     case 2: {
-                        //! Choices Like Client Info
                         System.Console.WriteLine(); 
                         client1.showAllClients(); 
                         goto adminDashboard;     
@@ -332,7 +331,7 @@ namespace MyProject
         }
         public static int GetAge(DateTime birthDate)
         {
-            DateTime n = DateTime.Now; // To avoid a race condition around midnight
+            DateTime n = DateTime.Now; 
             int age = n.Year - birthDate.Year;
 
             if (n.Month < birthDate.Month || (n.Month == birthDate.Month && n.Day < birthDate.Day))
@@ -340,11 +339,6 @@ namespace MyProject
 
             return age;
         }                
-
-
-
-
-                
-
+            
     }
 }
