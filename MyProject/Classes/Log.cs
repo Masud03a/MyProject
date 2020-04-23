@@ -2,12 +2,21 @@ using System;
 
 namespace MyProject
 {
-    class Log
+    public static class ConsoleShow
     {
-        public static void Error(string _exception)
+        public static void Error(string Text)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Fatal error was occured: " + _exception);
+            System.Console.Write(Text);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+        }
+
+        public static void Green(string Text)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            System.Console.Write(Text);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+
         }
     }
-}        
+}       
