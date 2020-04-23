@@ -269,6 +269,79 @@ namespace MyProject
                     System.Console.WriteLine("Error: not found ");
                     goto adminLogin; 
                 }
+            adminDashboard:
+                System.Console.Write(@"Admin Dashboard:
+                1. Info about Client by ID
+                2. Show All Clients with ID
+                3. Register Admin
+                4. Exit
+                Type reference number: ");
+                if( int.TryParse(Console.ReadLine(), out choice) ){
+                    if ( choice == 1 || choice == 2 || choice == 3){
+                        goto adminFuntions;
+                    }   
+                    else {
+                        System.Console.WriteLine("Incorrect choice");
+                        goto adminDashboard; 
+                    }
+                }  
+
+                else{
+                    System.Console.WriteLine("Incorrect choice");
+                    goto adminDashboard; 
+                }
+            adminFuntions:
+                Client client1 = new Client();
+                switch (choice)
+                {
+                    case 1:{
+                        System.Console.Write("Enter client ID: ");
+                        int userClientId = int.Parse(Console.ReadLine());
+                        client1 = new Client(userClientId);
+                        client1.showByClientId(userClientId);
+                        goto adminDashboard;
+                    } break; 
+                    case 2: {
+                        //! Choices Like Client Info
+                        System.Console.WriteLine(); 
+                        client1.showAllClients(); 
+                        goto adminDashboard;     
+                    } break; 
+                    case 3:{
+                        System.Console.WriteLine("Enter new Login and Password for new Admin");    
+                        System.Console.Write("Login: ");
+                        tempAdminLogin = Console.ReadLine();
+                        System.Console.Write("Password: ");
+                        tempAdminPassword = Console.ReadLine();
+                        Admins admins1 = new Admins(tempAdminLogin, tempAdminPassword);
+                        bool isAdminRegistered = admins1.Register();
+                        if ( isAdminRegistered ) {
+                            System.Console.WriteLine("Admin Registered");
+                            goto adminDashboard;
+                        }  
+                        else
+                        {
+                            System.Console.WriteLine("Error while Registering");
+                            goto adminFuntions; 
+                        }
+                    } break; 
+                    case 4:{
+                        goto startCode; 
+                    } break; 
+                }    
+        }
+        public static int GetAge(DateTime birthDate)
+        {
+            DateTime n = DateTime.Now; // To avoid a race condition around midnight
+            int age = n.Year - birthDate.Year;
+
+            if (n.Month < birthDate.Month || (n.Month == birthDate.Month && n.Day < birthDate.Day))
+                age--;
+
+            return age;
+        }                
+
+
 
 
                 
