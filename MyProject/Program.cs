@@ -252,8 +252,24 @@ namespace MyProject
                     Console.ForegroundColor = ConsoleColor.Green;
                     System.Console.WriteLine("\t\t\t\tCongratulations..... You have done it\n Now you may Login");           
                     Console.ForegroundColor = ConsoleColor.Yellow; 
-                    goto userLogin;  
-                    
+                    goto userLogin; 
+            
+            adminLogin:  
+                System.Console.WriteLine(@"                     Admin Panel:");   
+                System.Console.Write("Admin Login: ");
+                string tempAdminLogin = Console.ReadLine();
+                System.Console.Write("Admin Password: ");
+                string tempAdminPassword = Console.ReadLine();
+                Admins admins = new Admins(tempAdminLogin, tempAdminPassword);
+                bool isExist = admins.Login();
+                if ( (tempAdminLogin == adminLogin && tempAdminPassword == adminPassword) 
+                            || isExist == true ){
+                    goto adminDashboard; 
+                } else{
+                    System.Console.WriteLine("Error: not found ");
+                    goto adminLogin; 
+                }
+
 
                 
 
