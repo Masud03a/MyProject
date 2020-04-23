@@ -78,8 +78,125 @@ namespace MyProject
                     System.Console.WriteLine(clientID);
                     goto clientFunctions;
                 }   
+            
+            clientFunctions:
+                System.Console.Write(@"
+                What you can do:
+                1. Credit application filling
+                2. Applications State View
+                3. See graph of payment by Application ID
+                4. Exit
+                Please type reference number: ");
+                int clientFunctionsChoice;
+                if ( int.TryParse(Console.ReadLine(), out clientFunctionsChoice) ){
+                    if ( clientFunctionsChoice == 1 ){
+                        goto creditApplicationFilling;
+                    } else if ( clientFunctionsChoice == 2 ){
+                        goto clientApplicationView;
+                    } else if ( clientFunctionsChoice == 3 ){  
+                        goto graphPayment;
+                    } else if ( clientFunctionsChoice == 4 ){
+                        goto startCode;          
+                    } else{
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        System.Console.WriteLine("\t\t\t\tError try again");
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        goto clientFunctions;
+                    }
+                }
 
-                                 
-        }
+            graphPayment:
+                System.Console.WriteLine("Type Application ID: ");
+                int id = int.Parse(Console.ReadLine());
+                Payment payment = new Payment(id);
+                payment.showPaymentGraphByClientID();
+                goto clientFunctions;
+
+            creditApplicationFilling:
+                System.Console.WriteLine("\t\t\t\tThere a few questions to fill out: ");
+                creditAmountChecking:
+                    System.Console.Write("\t\t\t\tAmount of credit: ");
+                    double creditAmount;
+                    if ( !double.TryParse(Console.ReadLine(), out creditAmount) ){
+                        goto creditAmountChecking;
+                    }
+                creditTermChecking:
+                    System.Console.Write("\t\t\t\tTerm (1 Month, 2 Months.....)\nPlease enter number of months:");                        
+                    int creditTerm;
+                    if ( !int.TryParse(Console.ReadLine(), out creditTerm) ){
+                        goto creditTermChecking; 
+                    }
+                creditGoalChecking:
+                    System.Console.WriteLine("\t\t\t\tChoose goal for getting credit:\n\t\t\t\t1.Home Equipment\n\t\t\t\t2.Fix\n\t\t\t\t3.Phones\n\t\t\t\t4.Other");    
+                    System.Console.Write("\t\t\t\tPlease type reference number: ");
+                    int clientGoalChoice; string clientGoal;
+                    if ( !int.TryParse(Console.ReadLine(), out clientGoalChoice )){
+                        System.Console.WriteLine("\t\t\t\tError: Try Again");
+                        goto creditGoalChecking; 
+                    }
+                    else if ( clientGoalChoice < 1 || clientGoalChoice > 4 ){
+                        System.Console.WriteLine("\t\t\t\tError: Try Again");
+                        goto creditGoalChecking;
+                    }
+                    else 
+                    {
+                        switch( clientGoalChoice ){
+                            case 1: clientGoal = "Home"; break;
+                            case 3: clientGoal = "Fix"; break;
+                            case 4: clientGoal = "Others";break;
+                            default: clientGoal = "Phone"; break;
+                        }    
+
+                    }
+
+                creditSalaryChecking:
+                    System.Console.Write("\t\t\t\tYour Salary:");
+                    double creditSalary;
+                    if ( !double.TryParse(Console.ReadLine(), out creditSalary) ){
+                        goto creditSalaryChecking;
+                    }
+                    System.Console.WriteLine(creditSalary);           
+                Applications application = new Applications(clientID, creditAmount, creditTerm, clientGoal, creditSalary);
+                application.RegisterForCredit();
+                goto clientFunctions;
+
+                clientApplicationView:
+                    Applications applications = new Applications(clientID)
+                    applications.creditStateView();
+                    goto clientFunctions;
+                userRegister:
+                    System.Console.WriteLine("\t\t\t\tPlease fill following information carefully!!!");
+                    System.Console.Write("\t\t\t\tEnter your Firstname: ");
+                    string tempFirstname = Console.ReadLine();
+                    System.Console.Write("\t\t\t\tEnter your Lastname: ");
+                    string tempSecondname = Console.ReadLine();
+                    System.Console.Write("\t\t\t\tEnter your Middlename: ");
+                    string tempMiddlename = Console.ReadLine();
+                    loginPasswordChecking: 
+                        System.Console.Write("\t\t\t\tEnter your new login: (Use phone numbers) ");
+                        string login = Console.ReadLine();
+                        System.Console.Write("\t\t\t\tEnter your new password: ");
+                        string password = Console.ReadLine();
+                        Logins logins = new Logins(login, password);
+                        var result = logins.Register();
+                        if ( result == -1 ){
+                            goto loginPasswordChecking;
+                        } else if ( result == -2 ){
+                            goto userLogin;
+                        }
+                    ageIntEntering:
+                        System.Console.Write("\t\t\t\tEnter your birthday in format(dd/MM/yyyy): ");
+                        string birthday = Console.ReadLine();
+                        DateTime birthdayDate;
+                        int tempAge;
+                        if ( DateTime.TryParse(birthday, out birthdayDate) ){
+                            tempAge = GetAge(birthdayDate);
+                        } else{
+                            System.Console.WriteLine("\t\t\t\tError try again ... ");
+                            goto tempGenderChecking; 
+                        }
+                            
+
+
     }
 }
