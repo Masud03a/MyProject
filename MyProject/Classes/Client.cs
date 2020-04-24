@@ -19,6 +19,10 @@ namespace MyProject
             this.ID = ID; 
         }
 
+        public Client() {
+
+        }
+
         public Client(string Firstname, string Secondname, string Middlename, string Gender, int Age, string Citizenship, string Family)
         {
             this.Firstname = Firstname;
@@ -82,8 +86,8 @@ namespace MyProject
                     Applications application = new Applications(id);
                     application.creditStateView();
                     goto adminFunctions;
-                } 
-                break; 
+                }
+                break;
                 
                 case 2:
                 {
@@ -99,8 +103,9 @@ namespace MyProject
                             payment.showPaymentGraphByClientID();
                         }  
                         goto adminFunctions; 
-                } 
+                }
                 break;
+                
                 case 3:
                 {
 

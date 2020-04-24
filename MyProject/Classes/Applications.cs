@@ -35,7 +35,6 @@ namespace MyProject
             int clientId = ID; 
             double salary = this.Salary; 
 
-            //! Getting info about Client by ID 
             SqlConnection connection = new SqlConnection(Connection.connectionString);
 
             if ( connection.State == ConnectionState.Open ){
@@ -131,7 +130,7 @@ namespace MyProject
                 default: sum += 0; break;  
             }
 
-            //! percents 
+            
             int percents; 
             if ( CreditTerm < 6 ){
                 CreditAmount += ( CreditAmount * percentPerCredit[0] / 100 ); 
@@ -173,7 +172,7 @@ namespace MyProject
                 string strnow; 
 
                 int lastID = ApplicationIDs[ApplicationIDs.Count-1]; 
-                // History.AddApplicationToHistory(lastID, CreditAmount); 
+                
                 lastID++;  
 
 
@@ -183,8 +182,7 @@ namespace MyProject
                     SqlCommand command1 = new SqlCommand(commandText1, connection); 
                     command1.ExecuteNonQuery(); 
                     now = now.AddMonths(1); 
-                }
-                //!  
+                }  
             } 
             
             if ( result == 1 )isCreditRegistered = true; 
@@ -204,8 +202,6 @@ namespace MyProject
 
                 if ( (reader.FieldCount > 0) ){
                     while( reader.Read() ){
-                        
-                        int percent; 
 
                         string ApplicationId = reader.GetValue(0).ToString().Trim(); 
                         string Firstname = reader.GetValue(2).ToString().Trim();

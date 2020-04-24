@@ -9,29 +9,30 @@ namespace MyProject
     {
         static void Main(string[] args)
         {
-            string adminLogin = "admin";
-            string adminPassword = "password";
+
+            string adminLogin = "admin"; 
+            string adminPassword = "password"; 
             string[] familyArray = new string[]{"Single", "Married", "Divorced", "Widowed"}; 
             int clientID = 0; 
+            
+            
+            //! Dictionary 
+            var dictionary = new Dictionary<string, int>(); 
 
-            //Dictionary
-            var dictionary = new Dictionary<string, int>();
-            
             int choice; 
-            
-            
+
             startCode:
                 System.Console.Write(@"Welcome to AlifCreditHistory
-                Are you client or admin?
-                1. Admin
-                2. User
+                Are you client or admin? 
+                1. User
+                2. Admin
                 Please type reference number: ");
                 
                 int userInput; 
                 if ( int.TryParse(Console.ReadLine(), out userInput) ){
                     if ( userInput == 1 ){
                         goto userLogin;
-                         }
+                    }
                     else if ( userInput == 2 ){
                         goto adminLogin; 
                     }
@@ -40,96 +41,94 @@ namespace MyProject
                     }
                 } 
 
-            userLogin:
+
+
+            userLogin: 
                 System.Console.WriteLine("\t\t\t\tUser Panel");
                 System.Console.Write(@"
                 1. Register
                 2. Login
                 Please type referece number: ");
-                int clientInput;
+                int clientInput; 
                 if ( int.TryParse(Console.ReadLine(), out clientInput)){
                     if ( clientInput == 1 ){
                         goto userRegister;
                     }
-                    else if ( clientInput == 2 ){   
-                        goto clientLogin;
+                    else if ( clientInput == 2 ){
+                        goto clientLogin; 
                     }
                     else{
-                        System.Console.WriteLine("\t\t\t\tIncorrect choice. Try Again");
+                        ConsoleShow.Red("\t\t\t\tIncorrect choice. Try Again"); 
                         goto userLogin; 
                     }
                 }
-               
-            clientLogin:
+
+            clientLogin: 
                 System.Console.WriteLine("\t\t\t\tPlease type your login and password");
                 System.Console.Write("\t\t\t\tLogin: ");
                 string tempClientLogin = Console.ReadLine();
                 System.Console.Write("\t\t\t\tPassword: ");
                 string tempClientPassword = Console.ReadLine();
                 Logins clientLogin = new Logins(tempClientLogin, tempClientPassword);
-                   
                 clientID = clientLogin.Login();
-                
                 if ( clientID == -1 || clientID == -2 ){
-                    goto clientLogin;
+                    goto clientLogin; 
+                }else{
+                    goto clientFunctions; 
                 }
-                else
-                {
-                    System.Console.WriteLine(clientID);
-                    goto clientFunctions;
-                }   
             
-            clientFunctions:
+            clientFunctions: 
                 System.Console.Write(@"
                 What you can do:
-                1. Credit application filling
+                1. Credit application filling 
                 2. Applications State View
                 3. See graph of payment by Application ID
                 4. Exit
                 Please type reference number: ");
-                int clientFunctionsChoice;
+                int clientFunctionsChoice; 
                 if ( int.TryParse(Console.ReadLine(), out clientFunctionsChoice) ){
                     if ( clientFunctionsChoice == 1 ){
                         goto creditApplicationFilling;
-                    } else if ( clientFunctionsChoice == 2 ){
-                        goto clientApplicationView;
-                    } else if ( clientFunctionsChoice == 3 ){  
-                        goto graphPayment;
+                    }else if ( clientFunctionsChoice == 2 ){
+                        goto clientApplicationView; 
+                    } else if ( clientFunctionsChoice == 3 ){
+                      goto graphPayment; 
                     } else if ( clientFunctionsChoice == 4 ){
-                        goto startCode;          
+                        goto startCode; 
                     } else{
                         Console.ForegroundColor = ConsoleColor.Red;
                         System.Console.WriteLine("\t\t\t\tError try again");
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        goto clientFunctions;
+                        Console.ForegroundColor = ConsoleColor.White;
+                        goto clientFunctions; 
                     }
                 }
 
-            graphPayment:
-                System.Console.WriteLine("Type Application ID: ");
-                int id = int.Parse(Console.ReadLine());
-                Payment payment = new Payment(id);
-                payment.showPaymentGraphByClientID();
-                goto clientFunctions;
+           graphPayment:
+                System.Console.Write("Type Application ID: ");
+                int id = int.Parse(Console.ReadLine()); 
+                Payment payment = new Payment(clientID,id);
+                payment.showPaymentGraphByClientID(); 
+                goto clientFunctions; 
+
 
             creditApplicationFilling:
                 System.Console.WriteLine("\t\t\t\tThere a few questions to fill out: ");
-                creditAmountChecking:
+                creditAmountChecking:     
                     System.Console.Write("\t\t\t\tAmount of credit: ");
-                    double creditAmount;
+                    double creditAmount; 
                     if ( !double.TryParse(Console.ReadLine(), out creditAmount) ){
-                        goto creditAmountChecking;
+                        goto creditAmountChecking; 
                     }
-                creditTermChecking:
-                    System.Console.Write("\t\t\t\tTerm (1 Month, 2 Months.....)\nPlease enter number of months:");                        
-                    int creditTerm;
+                creditTermChecking: 
+                    System.Console.Write("\t\t\t\tTerm (1 Month, 2 Months.....)\nPlease enter number of months:");
+                    int creditTerm; 
                     if ( !int.TryParse(Console.ReadLine(), out creditTerm) ){
                         goto creditTermChecking; 
                     }
-                creditGoalChecking:
-                    System.Console.WriteLine("\t\t\t\tChoose goal for getting credit:\n\t\t\t\t1.Home Equipment\n\t\t\t\t2.Fix\n\t\t\t\t3.Phones\n\t\t\t\t4.Other");    
+                creditGoalChecking: 
+                    System.Console.WriteLine("\t\t\t\tChoose goal for getting credit:\n\t\t\t\t1.Home Equipment\n\t\t\t\t2.Fix\n\t\t\t\t3.Phones\n\t\t\t\t4.Other");
                     System.Console.Write("\t\t\t\tPlease type reference number: ");
-                    int clientGoalChoice; string clientGoal;
+                    int clientGoalChoice; string clientGoal; 
                     if ( !int.TryParse(Console.ReadLine(), out clientGoalChoice )){
                         System.Console.WriteLine("\t\t\t\tError: Try Again");
                         goto creditGoalChecking; 
@@ -138,33 +137,32 @@ namespace MyProject
                         System.Console.WriteLine("\t\t\t\tError: Try Again");
                         goto creditGoalChecking;
                     }
-                    else 
-                    {
+                    else{
                         switch( clientGoalChoice ){
-                            case 1: clientGoal = "Home"; break;
-                            case 3: clientGoal = "Fix"; break;
-                            case 4: clientGoal = "Others";break;
-                            default: clientGoal = "Phone"; break;
-                        }    
-
+                            case 1: clientGoal = "Home"; break; 
+                            case 3: clientGoal = "Fix"; break; 
+                            case 4: clientGoal = "Others"; break;
+                            default: clientGoal = "Phone"; break; 
+                        }
                     }
-
                 creditSalaryChecking:
                     System.Console.Write("\t\t\t\tYour Salary:");
-                    double creditSalary;
+                    double creditSalary; 
                     if ( !double.TryParse(Console.ReadLine(), out creditSalary) ){
-                        goto creditSalaryChecking;
+                        goto creditSalaryChecking; 
                     }
-                    System.Console.WriteLine(creditSalary);           
-                Applications application = new Applications(clientID, creditAmount, creditTerm, clientGoal, creditSalary);
-                application.RegisterForCredit();
-                goto clientFunctions;
+                    System.Console.WriteLine(creditSalary);
 
+                Applications application = new Applications(clientID, creditAmount, creditTerm, clientGoal, creditSalary);
+                application.RegisterForCredit(); 
+                goto clientFunctions; 
+                
             clientApplicationView:
-                Applications applications = new Applications(clientID)
-                applications.creditStateView();
-                goto clientFunctions;
-            userRegister:
+                Applications applications = new Applications(clientID);
+                applications.creditStateView(); 
+                goto clientFunctions;  
+
+            userRegister: 
                 System.Console.WriteLine("\t\t\t\tPlease fill following information carefully!!!");
                 System.Console.Write("\t\t\t\tEnter your Firstname: ");
                 string tempFirstname = Console.ReadLine();
@@ -172,69 +170,66 @@ namespace MyProject
                 string tempSecondname = Console.ReadLine();
                 System.Console.Write("\t\t\t\tEnter your Middlename: ");
                 string tempMiddlename = Console.ReadLine();
+                
                 loginPasswordChecking: 
                     System.Console.Write("\t\t\t\tEnter your new login: (Use phone numbers) ");
-                    string login = Console.ReadLine();
+                    string login = Console.ReadLine(); 
                     System.Console.Write("\t\t\t\tEnter your new password: ");
-                    string password = Console.ReadLine();
+                    string password = Console.ReadLine(); 
                     Logins logins = new Logins(login, password);
                     var result = logins.Register();
                     if ( result == -1 ){
-                        goto loginPasswordChecking;
-                    } else if ( result == -2 ){
-                        goto userLogin;
+                        goto loginPasswordChecking; 
+                    }else if ( result == -2 ){
+                        goto userLogin; 
                     }
-                ageIntEntering:
+
+                 
+                ageIntEntering: 
                     System.Console.Write("\t\t\t\tEnter your birthday in format(dd/MM/yyyy): ");
-                    string birthday = Console.ReadLine();
-                    DateTime birthdayDate;
-                    int tempAge;
-                    if ( DateTime.TryParse(birthday, out birthdayDate) ){
-                        tempAge = GetAge(birthdayDate);
-                    } else{
-                        System.Console.WriteLine("\t\t\t\tError try again ... ");
-                        goto tempGenderChecking; 
+                    string birthday = Console.ReadLine(); 
+                    DateTime birthdayDate; 
+                    int tempAge; 
+                    if ( DateTime.TryParse(birthday, out birthdayDate) ){ 
+                        tempAge = GetAge(birthdayDate); 
+                    }else{
+                        System.Console.WriteLine("\t\t\t\tError: try again");
+                        goto ageIntEntering; 
                     }
-                tempGenderChecking:
+                    
+                tempGenderChecking: 
                     System.Console.Write("\t\t\t\tEnter your Gender: M/F");
                     string tempGender = Console.ReadLine();
                     if ( tempGender == "M" ){
-                        tempGender = "Male";
-                    }
-                    else if ( tempGender == "F" ){
-                        tempGender = "Female";
-                    }
-                    else
-                    {
+                        tempGender = "Male"; 
+                    }else if ( tempGender == "F" ){
+                        tempGender = "Female"; 
+                    }else{
                         System.Console.WriteLine("\t\t\t\tError try again ... ");
-                        goto tempGenderChecking;
-                    }       
-                tempCitizenshipChecking:
+                        goto tempGenderChecking; 
+                    }
+
+                
+                tempCitizenshipChecking: 
                     System.Console.Write("\t\t\t\tEnter your citizenship: Tajikistan/Other");
                     string tempCitizenship = Console.ReadLine();
-                    if ( tempCitizenship.ToLower() == "tajikistan") {
-                        tempCitizenship = "Tajikistan";
-                    } 
-                    else if ( tempCitizenship.ToLower() == "other") {
-                        tempCitizenship = "Other";
-                    } 
-                    else {
+                    if ( tempCitizenship.ToLower() == "tajikistan"){
+                        tempCitizenship = "Tajikistan"; 
+                    }else if ( tempCitizenship.ToLower() == "other") {
+                        tempCitizenship = "Other"; 
+                    }else{
                         System.Console.WriteLine("Error try again ... ");
                         goto tempCitizenshipChecking;
                     }
-                tempFamilyChecking:
-                    bool isInFamilyArray = false;
-                    System.Console.Write(@"Enter your family state....
-                    1. Married 
-                    2. Divorced
-                    3. Single
-                    4. Widowed
-                    Type family state: ");
+                
+                tempFamilyChecking:     
+                    bool isInFamilyArray = false; 
+                    System.Console.Write("\t\t\t\tEnter your family state....\n\t\t\t\t1. Married\n\t\t\t\t2. Divorced\n\t\t\t\t3. Single\n\t\t\t\t4. Widowed\n\t\t\t\t4Type family state: ");
                     string tempFamily = Console.ReadLine(); 
                     foreach (var item in familyArray)
                     {
                         if ( item.ToLower() == tempFamily.ToLower() ){
-                            isInFamilyArray = true;
+                            isInFamilyArray = true; 
                             tempFamily = item; 
                             break; 
                         }
@@ -242,33 +237,35 @@ namespace MyProject
                     if ( !isInFamilyArray ){
                         goto tempFamilyChecking; 
                     } 
-
-                ClientAdding:
+                ClientAdding: 
                     Client client = new Client(tempFirstname, tempSecondname, tempMiddlename, tempGender, tempAge, tempCitizenship, tempFamily);
                     bool isAdded = client.AddClient();
-                    if ( !isAdded ) {
+                    if ( !isAdded ){
                         goto ClientAdding; 
-                    }   
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    System.Console.WriteLine("\t\t\t\tCongratulations..... You have done it\n Now you may Login");           
-                    Console.ForegroundColor = ConsoleColor.Yellow; 
-                    goto userLogin; 
-            
-            adminLogin:  
-                System.Console.WriteLine(@"                     Admin Panel:");   
+                    } 
+                    Console.ForegroundColor = ConsoleColor.Green; 
+                    System.Console.WriteLine("\t\t\t\tCongratulations..... You have done it\n Now you may Login");
+                    Console.ForegroundColor = ConsoleColor.White; 
+                    goto userLogin;  
+                
+
+            /// Admin Login
+            adminLogin: 
+                System.Console.WriteLine(@"                     Admin Panel:");        
                 System.Console.Write("Admin Login: ");
                 string tempAdminLogin = Console.ReadLine();
                 System.Console.Write("Admin Password: ");
                 string tempAdminPassword = Console.ReadLine();
                 Admins admins = new Admins(tempAdminLogin, tempAdminPassword);
-                bool isExist = admins.Login();
+                bool isExist = admins.Login(); 
                 if ( (tempAdminLogin == adminLogin && tempAdminPassword == adminPassword) 
                             || isExist == true ){
                     goto adminDashboard; 
-                } else{
+                }else{
                     System.Console.WriteLine("Error: not found ");
                     goto adminLogin; 
                 }
+
             adminDashboard:
                 System.Console.Write(@"Admin Dashboard:
                 1. Info about Client by ID
@@ -277,57 +274,61 @@ namespace MyProject
                 4. Exit
                 Type reference number: ");
                 if( int.TryParse(Console.ReadLine(), out choice) ){
-                    if ( choice == 1 || choice == 2 || choice == 3){
-                        goto adminFuntions;
-                    }   
-                    else {
+                    if ( choice == 1 || choice == 2 || choice == 3 || choice == 4){
+                        goto adminFuntions; 
+                    }
+                    else{
                         System.Console.WriteLine("Incorrect choice");
                         goto adminDashboard; 
                     }
-                }  
-
+                }
                 else{
                     System.Console.WriteLine("Incorrect choice");
                     goto adminDashboard; 
                 }
+            
             adminFuntions:
                 Client client1 = new Client();
                 switch (choice)
                 {
                     case 1:{
                         System.Console.Write("Enter client ID: ");
-                        int userClientId = int.Parse(Console.ReadLine());
-                        client1 = new Client(userClientId);
-                        client1.showByClientId(userClientId);
-                        goto adminDashboard;
-                    } break; 
+                        int userClientId = int.Parse(Console.ReadLine()); 
+                        client1 = new Client(userClientId); 
+                        client1.showByClientId(userClientId); 
+                        goto adminDashboard; 
+
+                    }
                     case 2: {
                         System.Console.WriteLine(); 
                         client1.showAllClients(); 
-                        goto adminDashboard;     
-                    } break; 
+                        goto adminDashboard; 
+
+                    }
                     case 3:{
-                        System.Console.WriteLine("Enter new Login and Password for new Admin");    
+                        System.Console.WriteLine("Enter new Login and Password for new Admin");
                         System.Console.Write("Login: ");
                         tempAdminLogin = Console.ReadLine();
                         System.Console.Write("Password: ");
-                        tempAdminPassword = Console.ReadLine();
+                        tempAdminPassword = Console.ReadLine(); 
                         Admins admins1 = new Admins(tempAdminLogin, tempAdminPassword);
                         bool isAdminRegistered = admins1.Register();
-                        if ( isAdminRegistered ) {
+                        if ( isAdminRegistered ){
                             System.Console.WriteLine("Admin Registered");
-                            goto adminDashboard;
-                        }  
-                        else
-                        {
+                            goto adminDashboard; 
+                        } 
+                        else{
                             System.Console.WriteLine("Error while Registering");
                             goto adminFuntions; 
                         }
-                    } break; 
+
+                    }
                     case 4:{
                         goto startCode; 
-                    } break; 
-                }    
+                    } 
+                }
+                
+                
         }
         public static int GetAge(DateTime birthDate)
         {
@@ -338,7 +339,6 @@ namespace MyProject
                 age--;
 
             return age;
-        }                
-            
+        }
     }
 }
